@@ -33,6 +33,7 @@ public class NotificacionController {
 		NotificacionResponse response = new NotificacionResponse();
 		Set<Producto> ids = pedidoResponse.getPedido().getProductos();
 		String nombreproducto ="Productos: ";
+		String tipo="";
 		
 		for (Producto producto : ids) {
 			nombreproducto += producto.getNombre()+" ";
@@ -43,7 +44,18 @@ public class NotificacionController {
 		mensaje.setMensaje(nombreproducto);
 		String token = configuracion.getWhatzmeapitoken();
 		//mensaje.setMensaje(Pedido.get);
-		WhatsResponse whatsresponse= whatsAppProxy.enviaMensaje(token, mensaje);
+		try {
+			WhatsResponse whatsresponse= whatsAppProxy.enviaMensaje(token, mensaje);
+			if(whatsresponse.isExito()) {
+				
+			}
+			response.setSuccessful(true);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			response.setMessage(":'(");
+			response.setSuccessful(false);
+		}
 		
 		return response;		
 	}
