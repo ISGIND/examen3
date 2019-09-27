@@ -1,6 +1,6 @@
-package com.everis.pedidos.response;
+package com.everis.notificaciones.responses;
 
-import com.everis.pedidos.model.Pedido;
+import com.everis.notificaciones.model.Pedido;
 
 public class PedidoResponse {
 	

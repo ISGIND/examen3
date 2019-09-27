@@ -28,11 +28,12 @@ public class NotificacionController {
 	@ResponseBody
 	public NotificacionResponse enviaConfirmacion(@RequestBody Pedido pedido) {//(@RequestBody Pedido json) {
 		NotificacionResponse response = new NotificacionResponse();
-		
+		int[] ids = null;
 		Mensaje mensaje = new Mensaje();
 		mensaje.setNumero(configuracion.getWhatsappdestino());
+		String token = configuracion.getWhatzmeapitoken();
 		//mensaje.setMensaje(Pedido.get);
-		whatsAppProxy.enviaMensaje(mensaje);
+		whatsAppProxy.enviaMensaje(token, mensaje);
 		
 		
 		

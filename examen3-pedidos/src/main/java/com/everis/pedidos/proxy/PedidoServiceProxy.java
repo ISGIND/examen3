@@ -2,12 +2,11 @@ package com.everis.pedidos.proxy;
 
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.everis.pedidos.model.Pedido;
+
+import com.everis.pedidos.response.NotificacionResponse;
 import com.everis.pedidos.response.PedidoResponse;
 
 @FeignClient(name="EXAMEN3-NOTIFICACIONES")
@@ -15,6 +14,6 @@ import com.everis.pedidos.response.PedidoResponse;
 public interface PedidoServiceProxy {
 
 	@PostMapping("/examen3-notificacion/pedido/")
-	public NotificacionResponse pedidoResponse(@RequestBody PedidoResponse pedido);
+	public NotificacionResponse notificacionRetrieve(@RequestBody PedidoResponse pedido);
 
 }
