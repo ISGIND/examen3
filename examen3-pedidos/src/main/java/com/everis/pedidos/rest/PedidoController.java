@@ -27,7 +27,7 @@ public class PedidoController {
 
 	@PostMapping()
 	@ResponseBody
-	public PedidoResponse nuevoPedido(@RequestBody Pedido pedido) {
+	public NotificacionResponse nuevoPedido(@RequestBody Pedido pedido) {
 		PedidoResponse pedidoResponse = new PedidoResponse();
 		NotificacionResponse notificacionResponse = new NotificacionResponse();
 		try {
@@ -45,7 +45,7 @@ public class PedidoController {
 		
 		
 		//NO ENVIAR PEDIDO; ENVIAR NOTIFICACION RESPONSE
-		return pedidoResponse;
+		return notificacionResponse;
 	}
 	
 }
