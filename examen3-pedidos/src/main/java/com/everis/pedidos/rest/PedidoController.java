@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.everis.pedidos.model.Pedido;
+import com.everis.pedidos.proxy.PedidoServiceProxy;
 import com.everis.pedidos.response.PedidoResponse;
 import com.everis.pedidos.service.PedidosService;
+
+import feign.Body;
 
 @RestController
 @RequestMapping("/pedido")
@@ -18,6 +21,9 @@ public class PedidoController {
 	@Autowired
 	private PedidosService pedidoService;
 	
+	@Autowired
+	private PedidoServiceProxy pedidoServiceProxy;
+
 	@GetMapping()
 
 	@PostMapping()
@@ -34,6 +40,8 @@ public class PedidoController {
 			pedidoResponse.setSuccessful(false);
 			pedidoResponse.setMessage(e.getMessage());
 		}
+		
+	    	notificacionResponse = pedidoServiceProxy.pedidoResponse(pedidoResponse);
 		
 		
 		//NO ENVIAR PEDIDO; ENVIAR NOTIFICACION RESPONSE

@@ -14,8 +14,7 @@ import com.everis.pedidos.response.PedidoResponse;
 @RibbonClient(name = "EXAMEN3-PEDIDOS")
 public interface PedidoServiceProxy {
 
-	@PostMapping("/spring-cloud-rest/pedido/{pedido}}")
-	public PedidoResponse pedidoResponse(@RequestBody Pedido json);
-	
-	
+	@PostMapping("/examen3-notificacion/pedido/")
+	public NotificacionResponse pedidoResponse(@RequestBody PedidoResponse pedido);
+
 }
