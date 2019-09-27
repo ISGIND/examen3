@@ -19,8 +19,10 @@ public class CorreoService {
 	      return email.matches(regex);
 	   }
 	
-	public void enviarCorreo(String email, String asunto, String texto) {
+	public boolean enviarCorreo(String email, String asunto, String texto) {
 		// TODO Auto-generated method stub
+		
+		boolean exitoCorreo;
 		if(isValid(email)) {
 			String remitente = "academiaeveris";
 			
@@ -34,6 +36,8 @@ public class CorreoService {
 		    
 		    Session session = Session.getDefaultInstance(props);
 		    MimeMessage message = new MimeMessage(session);
+		    
+		   exitoCorreo = true;
 		    
 		    try {
 		        message.setFrom(new InternetAddress(remitente));
@@ -49,6 +53,10 @@ public class CorreoService {
 		        me.printStackTrace();
 		    }
 		}
+		else{
+			exitoCorreo=false;
+		}
+		return exitoCorreo;
 		
 	}
 
