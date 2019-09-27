@@ -1,5 +1,7 @@
 package com.everis.pedidos.repository;
 
-public interface ProductoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductoRepository extends JpaRepository <Producto, Integer> {
 
 }
