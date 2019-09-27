@@ -13,6 +13,7 @@ import com.everis.notificaciones.model.Configuracion;
 import com.everis.notificaciones.model.Mensaje;
 import com.everis.notificaciones.model.Producto;
 import com.everis.notificaciones.proxy.WhatsAppProxy;
+import com.everis.notificaciones.repository.ProductosRepository;
 import com.everis.notificaciones.responses.NotificacionResponse;
 import com.everis.notificaciones.responses.PedidoResponse;
 import com.everis.notificaciones.responses.WhatsResponse;
@@ -26,6 +27,8 @@ public class NotificacionController {
 	
 	@Autowired
 	private Configuracion configuracion;
+	@Autowired
+	private ProductosRepository productosRepository;
 	
 	@PostMapping("/pedido")
 	@ResponseBody
@@ -34,9 +37,11 @@ public class NotificacionController {
 		Set<Producto> ids = pedidoResponse.getPedido().getProductos();
 		String nombreproducto ="Productos: ";
 		String tipo="";
+		Producto productoBuscado = new Producto();
 		
 		for (Producto producto : ids) {
-			nombreproducto += producto.getNombre()+" ";
+			productoBuscado=productosRepository.findById(producto.getId()).get();
+			nombreproducto += productoBuscado.getNombre()+" ";
 		}
 		
 		Mensaje mensaje = new Mensaje();
