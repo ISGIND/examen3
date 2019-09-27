@@ -6,6 +6,7 @@ public class PedidoResponse {
 	
 	private boolean successful;
 	private Pedido pedido;
+	private String message;
 
 	public boolean isSuccessful() {
 		return successful;
@@ -19,5 +20,16 @@ public class PedidoResponse {
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
+<<<<<<< Updated upstream
+=======
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
+	
+>>>>>>> Stashed changes
 	
 }
