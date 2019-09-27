@@ -1,5 +1,5 @@
 package com.everis.pedidos.model;
-// Generated 27/09/2019 12:36:02 PM by Hibernate Tools 5.2.12.Final
+// Generated 27/09/2019 12:58:19 PM by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,36 +17,36 @@ import javax.persistence.Table;
 @Table(name = "cliente", catalog = "examen3")
 public class Cliente implements java.io.Serializable {
 
-	private int idcliente;
+	private int id;
 	private String nombre;
 	private String latitud;
 	private String longitud;
-	private Set<Pedidos> pedidoses = new HashSet<Pedidos>(0);
+	private Set<Pedido> pedidos = new HashSet<Pedido>(0);
 
 	public Cliente() {
 	}
 
-	public Cliente(int idcliente) {
-		this.idcliente = idcliente;
+	public Cliente(int id) {
+		this.id = id;
 	}
 
-	public Cliente(int idcliente, String nombre, String latitud, String longitud, Set<Pedidos> pedidoses) {
-		this.idcliente = idcliente;
+	public Cliente(int id, String nombre, String latitud, String longitud, Set<Pedido> pedidos) {
+		this.id = id;
 		this.nombre = nombre;
 		this.latitud = latitud;
 		this.longitud = longitud;
-		this.pedidoses = pedidoses;
+		this.pedidos = pedidos;
 	}
 
 	@Id
 
-	@Column(name = "idcliente", unique = true, nullable = false)
-	public int getIdcliente() {
-		return this.idcliente;
+	@Column(name = "id", unique = true, nullable = false)
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdcliente(int idcliente) {
-		this.idcliente = idcliente;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Column(name = "nombre", length = 45)
@@ -77,12 +77,12 @@ public class Cliente implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
-	public Set<Pedidos> getPedidoses() {
-		return this.pedidoses;
+	public Set<Pedido> getPedidos() {
+		return this.pedidos;
 	}
 
-	public void setPedidoses(Set<Pedidos> pedidoses) {
-		this.pedidoses = pedidoses;
+	public void setPedidos(Set<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 }

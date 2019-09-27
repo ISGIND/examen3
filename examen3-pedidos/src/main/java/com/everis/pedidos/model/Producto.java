@@ -1,12 +1,15 @@
 package com.everis.pedidos.model;
-// Generated 27/09/2019 12:36:02 PM by Hibernate Tools 5.2.12.Final
+// Generated 27/09/2019 12:58:19 PM by Hibernate Tools 5.2.12.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -16,47 +19,36 @@ import javax.persistence.Table;
 @Table(name = "producto", catalog = "examen3")
 public class Producto implements java.io.Serializable {
 
-	private int idproducto;
-	private Pedidos pedidos;
+	private int id;
 	private String nombre;
 	private Double precio;
 	private String url;
+	private Set<Pedido> pedidos = new HashSet<Pedido>(0);
 
 	public Producto() {
 	}
 
-	public Producto(int idproducto, Pedidos pedidos) {
-		this.idproducto = idproducto;
-		this.pedidos = pedidos;
+	public Producto(int id) {
+		this.id = id;
 	}
 
-	public Producto(int idproducto, Pedidos pedidos, String nombre, Double precio, String url) {
-		this.idproducto = idproducto;
-		this.pedidos = pedidos;
+	public Producto(int id, String nombre, Double precio, String url, Set<Pedido> pedidos) {
+		this.id = id;
 		this.nombre = nombre;
 		this.precio = precio;
 		this.url = url;
+		this.pedidos = pedidos;
 	}
 
 	@Id
 
-	@Column(name = "idproducto", unique = true, nullable = false)
-	public int getIdproducto() {
-		return this.idproducto;
+	@Column(name = "id", unique = true, nullable = false)
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdproducto(int idproducto) {
-		this.idproducto = idproducto;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pedidos_id", nullable = false)
-	public Pedidos getPedidos() {
-		return this.pedidos;
-	}
-
-	public void setPedidos(Pedidos pedidos) {
-		this.pedidos = pedidos;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Column(name = "nombre", length = 45)
@@ -84,6 +76,18 @@ public class Producto implements java.io.Serializable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "pedido_has_producto", catalog = "examen3", joinColumns = {
+			@JoinColumn(name = "producto_id", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "pedido_id", nullable = false, updatable = false) })
+	public Set<Pedido> getPedidos() {
+		return this.pedidos;
+	}
+
+	public void setPedidos(Set<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 }
