@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.everis.pedidos.response.PedidoResponse;
 
-@FeignClient(name="EXAMEN3-PEDIDOS")
+@FeignClient(name="EXAMEN3-NOTIFICACIONES")
 @RibbonClient(name = "EXAMEN3-PEDIDOS")
 public interface PedidoServiceProxy {
 

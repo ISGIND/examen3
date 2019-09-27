@@ -23,6 +23,10 @@ import javax.persistence.TemporalType;
 @Table(name = "pedido", catalog = "examen3")
 public class Pedido implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private Cliente cliente;
 	private Date fechahoraregistro;
