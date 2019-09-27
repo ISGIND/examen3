@@ -5,18 +5,17 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.everis.pedidos.model.Pedido;
 import com.everis.pedidos.response.PedidoResponse;
 
 @FeignClient(name="EXAMEN3-NOTIFICACIONES")
 @RibbonClient(name = "EXAMEN3-PEDIDOS")
 public interface PedidoServiceProxy {
 
-	@GetMapping("/consultarInventario/producto/{id}")
-	public PedidoResponse retrieveInventario(@PathVariable int id);
+	@PostMapping("/spring-cloud-rest/pedido/{pedido}}")
+	public PedidoResponse pedidoResponse(@RequestBody Pedido json);
 	
-	//  /rest/api/enviar-mensaje?877be9b47ac39dcbdac80d4fff18e554352abc13
-	@PostMapping("/decrementar/producto/{id}/cantidad/{cantidad}")
-	public PedidoResponse retrieveDecrementar(@PathVariable int id, @PathVariable int cantidad);
 	
 }
