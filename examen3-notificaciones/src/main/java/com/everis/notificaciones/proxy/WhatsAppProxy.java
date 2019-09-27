@@ -1,16 +1,26 @@
 package com.everis.notificaciones.proxy;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.everis.notificaciones.model.Configuracion;
 import com.everis.notificaciones.model.Mensaje;
-import com.everis.notificaciones.responses.MensajeResponse;
+import com.everis.notificaciones.responses.NotificacionResponse;
+import com.everis.notificaciones.responses.WhatsResponse;
 
-@FeignClient(name="whatzmeapi", url="https://whatzmeapi.com:10501/rest/api/enviar-mensaje?token=877be9b47ac39dcbdac80d4fff18e554352abc13")
+import feign.QueryMap;
+
+
+@FeignClient(name="whatzmeapi", url="https://whatzmeapi.com:10501/rest/api")
 public interface WhatsAppProxy {
 	
-	@PostMapping
-	public MensajeResponse enviaMensaje(@RequestBody Mensaje mensaje);
+	@PostMapping("/enviar-mensaje?")
+	public WhatsResponse enviaMensaje(@RequestParam("token") String token, @RequestBody Mensaje mensaje);
+	
+//	@PostMapping(url)
+//	public WhatsResponse enviaMensaje(@RequestBody Mensaje mensaje);
 
 }
