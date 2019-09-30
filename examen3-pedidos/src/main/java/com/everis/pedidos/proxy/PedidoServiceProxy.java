@@ -9,7 +9,7 @@ import com.everis.pedidos.response.NotificacionResponse;
 import com.everis.pedidos.response.PedidoResponse;
 
 @FeignClient(name="EXAMEN3")
-@RibbonClient(name = "EXAMEN3")
+//@RibbonClient(name = "EXAMEN3")
 public interface PedidoServiceProxy {
 
 	@PostMapping("notificacion/pedido")

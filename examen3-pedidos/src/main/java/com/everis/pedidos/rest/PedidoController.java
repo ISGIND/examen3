@@ -18,6 +18,7 @@ import com.everis.pedidos.service.PedidosService;
 
 @RestController
 @RequestMapping("/pedido")
+@ResponseBody
 public class PedidoController {
 	@Autowired
 	private PedidosService pedidoService;
