@@ -1,5 +1,7 @@
 package com.everis.pedidos.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,10 @@ public class PedidosService {
 	
 	public Pedido insertarPedido(Pedido pedido) {
 		return pedidoRepository.save(pedido);
+	}
+	
+	public List<Pedido> listarPedidos() {
+		List<Pedido> pedidos = pedidoRepository.findAll();
+		return pedidos;
 	}
 }
