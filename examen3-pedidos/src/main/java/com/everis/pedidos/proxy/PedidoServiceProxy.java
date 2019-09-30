@@ -4,7 +4,6 @@ import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.everis.pedidos.response.NotificacionResponse;
 import com.everis.pedidos.response.PedidoResponse;
@@ -13,8 +12,7 @@ import com.everis.pedidos.response.PedidoResponse;
 @RibbonClient(name = "EXAMEN3")
 public interface PedidoServiceProxy {
 
-	@PostMapping("/notificacion/pedido")
-
+	@PostMapping("notificacion/pedido")
 	public NotificacionResponse enviaConfirmacion(@RequestBody PedidoResponse pedido);
 
 }
