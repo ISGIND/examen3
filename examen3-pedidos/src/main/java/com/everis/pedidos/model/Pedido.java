@@ -63,7 +63,7 @@ public class Pedido implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cliente_idcliente", nullable = false)
 	public Cliente getCliente() {
 		return this.cliente;
@@ -93,7 +93,7 @@ public class Pedido implements java.io.Serializable {
 		this.fechahoraentrega = fechahoraentrega;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "pedido_has_producto", catalog = "examen3", joinColumns = {
 			@JoinColumn(name = "pedido_id", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "producto_id", nullable = false, updatable = false) })

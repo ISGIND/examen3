@@ -88,7 +88,7 @@ public class Producto implements java.io.Serializable {
 		this.url = url;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "pedido_has_producto", catalog = "examen3", joinColumns = {
 			@JoinColumn(name = "producto_id", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "pedido_id", nullable = false, updatable = false) })
