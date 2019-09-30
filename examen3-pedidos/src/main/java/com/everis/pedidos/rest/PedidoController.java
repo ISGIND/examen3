@@ -1,5 +1,7 @@
 package com.everis.pedidos.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +26,12 @@ public class PedidoController {
 	private PedidoServiceProxy pedidoServiceProxy;
 
 	@GetMapping()
-
+	public List<Pedido> listarPedidos() {
+		return pedidoService.listarPedidos();
+		
+	}
+	
+		
 	@PostMapping()
 	@ResponseBody
 	public NotificacionResponse nuevoPedido(@RequestBody Pedido pedido) {
@@ -41,7 +48,7 @@ public class PedidoController {
 			pedidoResponse.setMessage(e.getMessage());
 		}
 		
-	    	notificacionResponse = pedidoServiceProxy.notificacionRetrieve(pedidoResponse);
+	    	notificacionResponse = pedidoServiceProxy.enviaConfirmacion(pedidoResponse);
 		
 		
 		//NO ENVIAR PEDIDO; ENVIAR NOTIFICACION RESPONSE
