@@ -17,7 +17,7 @@ public interface WhatsAppProxy {
 	@PostMapping("/enviar-mensaje")
 	public WhatsResponse enviaMensaje(@RequestParam(name="token") String token, @RequestBody Mensaje mensaje);
 	
-//	@PostMapping(url)
-//	public WhatsResponse enviaMensaje(@RequestBody Mensaje mensaje);
+	@PostMapping("/enviar-ubicacion")
+	public WhatsResponse enviaUbicacion(@RequestParam(name="token") String token, @RequestBody Mensaje mensaje);
 
 }

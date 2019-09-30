@@ -47,6 +47,8 @@ public class NotificacionController {
 			productoBuscado=productosRepository.findById(producto.getId()).get();
 			nombreproducto += productoBuscado.getNombre()+" ";
 		}
+		
+		
 		if(configuracion.getTiponotificacion().equals("dev") || configuracion.getTiponotificacion().equals("default")){
 			Mensaje mensaje = new Mensaje();			
 			mensaje.setNumero(configuracion.getWhatsappdestino());
@@ -56,6 +58,7 @@ public class NotificacionController {
 			boolean correo2 = correo.enviarCorreo(configuracion.getEmaildestino(), "Compra", mensaje.toString());
 			if(whatsresponse.isExito() && correo2) {
 				response.setSuccessful(true);
+				response.setTipoMensaje("ambos");
 			}
 			
 			
@@ -69,6 +72,7 @@ public class NotificacionController {
 			boolean correo2=correo.enviarCorreo(configuracion.getEmaildestino(), "Compra", mensaje.toString());
 			if(correo2) {
 				response.setSuccessful(true);
+				response.setTipoMensaje("email");
 			}
 		}
 		if(configuracion.getTiponotificacion().equals("prod")){
@@ -79,29 +83,10 @@ public class NotificacionController {
 			WhatsResponse whatsresponse= whatsAppProxy.enviaMensaje(token, mensaje);
 			if(whatsresponse.isExito()) {
 				response.setSuccessful(true);
+				response.setTipoMensaje("whats");
 			}
 		}
-		
-		
-//		Mensaje mensaje = new Mensaje();
-//		mensaje.setNumero(configuracion.getWhatsappdestino());
-//		mensaje.setMensaje(nombreproducto);
-//		String token = configuracion.getWhatzmeapitoken();
-//		//mensaje.setMensaje(Pedido.get);
-//		try {
-//			WhatsResponse whatsresponse= whatsAppProxy.enviaMensaje(token, mensaje);
-//			
-//			if(whatsresponse.isExito()) {
-//				
-//			}
-//			response.setSuccessful(true);
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			response.setMessage(":'(");
-//			response.setSuccessful(false);
-//		}
-//		
+			
 		return response;		
 	}
 	
