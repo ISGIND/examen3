@@ -17,7 +17,9 @@ import com.everis.notificaciones.repository.ProductosRepository;
 import com.everis.notificaciones.responses.NotificacionResponse;
 import com.everis.notificaciones.responses.PedidoResponse;
 import com.everis.notificaciones.responses.WhatsResponse;
+import com.everis.notificaciones.service.ClienteService;
 import com.everis.notificaciones.service.CorreoService;
+import com.everis.notificaciones.service.ProductoService;
 
 @RestController
 @RequestMapping("/notificacion")
@@ -32,19 +34,24 @@ public class NotificacionController {
 	@Autowired
 	private Configuracion configuracion;
 	@Autowired
-	private ProductosRepository productosRepository;
+	private ProductoService productoService;
+	@Autowired
+	private ClienteService clienteService;
+	
 	
 	@PostMapping("/pedido")
 	@ResponseBody
 	public NotificacionResponse enviaConfirmacion(@RequestBody PedidoResponse pedidoResponse) {//(@RequestBody Pedido json) {
 		NotificacionResponse response = new NotificacionResponse();
 		Set<Producto> ids = pedidoResponse.getPedido().getProductos();
+		String latitud = clienteService.buscarCliente(pedidoResponse.getPedido().getCliente().getId()).getLatitud();
+		String longitud = clienteService.buscarCliente(pedidoResponse.getPedido().getCliente().getId()).getLongitud();
 		String nombreproducto ="Productos: ";
 		String tipo="";
 		Producto productoBuscado = new Producto();
 		
 		for (Producto producto : ids) {
-			productoBuscado=productosRepository.findById(producto.getId()).get();
+			productoBuscado=productoService.buscarProducto(producto.getId());
 			nombreproducto += productoBuscado.getNombre()+" ";
 		}
 		
@@ -53,8 +60,11 @@ public class NotificacionController {
 		if(configuracion.getTiponotificacion().equals("ambas")){
 			Mensaje mensaje = new Mensaje();			
 			mensaje.setNumero(configuracion.getWhatsappdestino());
-			mensaje.setMensaje(nombreproducto);
+			mensaje.setMensaje(nombreproducto.toString());
 			String token = configuracion.getWhatzmeapitoken();
+			mensaje.setDireccion("Esta direccion");
+			mensaje.setLatitud(latitud);
+			mensaje.setLongitud(longitud);
 			WhatsResponse whatsresponse= whatsAppProxy.enviaMensaje(token, mensaje);
 			WhatsResponse whatsresponse1 = whatsAppProxy.enviaUbicacion(token, mensaje);
 			boolean correo2 = correo.enviarCorreo(configuracion.getEmaildestino(), "Compra", mensaje.toString());
@@ -92,7 +102,10 @@ public class NotificacionController {
 			Mensaje mensaje = new Mensaje();			
 			mensaje.setNumero(configuracion.getWhatsappdestino());
 			mensaje.setMensaje(nombreproducto);
-			String token = configuracion.getWhatzmeapitoken();	
+			String token = configuracion.getWhatzmeapitoken();
+			mensaje.setDireccion("Esta direccion");
+			mensaje.setLatitud(latitud);
+			mensaje.setLongitud(longitud);
 			WhatsResponse whatsresponse= whatsAppProxy.enviaMensaje(token, mensaje);
 			WhatsResponse whatsresponse1 = whatsAppProxy.enviaUbicacion(token, mensaje);
 			if(whatsresponse.isExito() && whatsresponse1.isExito()) {
