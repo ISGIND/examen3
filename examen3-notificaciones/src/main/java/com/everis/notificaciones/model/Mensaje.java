@@ -1,6 +1,5 @@
 package com.everis.notificaciones.model;
 
-import java.math.BigDecimal;
 
 public class Mensaje {
 	

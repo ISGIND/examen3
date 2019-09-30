@@ -10,7 +10,7 @@ public class NotificacionResponse {
 	private String tipoMensaje; 
 	private String message;
 	private Pedido pedido;
-	private BigDecimal port;	
+	private int port;	
 	
 	public boolean isSuccessful() {
 		return successful;
@@ -36,10 +36,10 @@ public class NotificacionResponse {
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
-	public BigDecimal getPort() {
+	public int getPort() {
 		return port;
 	}
-	public void setPort(BigDecimal port) {
+	public void setPort(int port) {
 		this.port = port;
 	}
 	

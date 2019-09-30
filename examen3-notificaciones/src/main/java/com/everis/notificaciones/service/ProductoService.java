@@ -1,6 +1,5 @@
 package com.everis.notificaciones.service;
 
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

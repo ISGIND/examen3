@@ -3,6 +3,7 @@ package com.everis.notificaciones.controller;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,6 @@ import com.everis.notificaciones.model.Configuracion;
 import com.everis.notificaciones.model.Mensaje;
 import com.everis.notificaciones.model.Producto;
 import com.everis.notificaciones.proxy.WhatsAppProxy;
-import com.everis.notificaciones.repository.ProductosRepository;
 import com.everis.notificaciones.responses.NotificacionResponse;
 import com.everis.notificaciones.responses.PedidoResponse;
 import com.everis.notificaciones.responses.WhatsResponse;
@@ -26,7 +26,7 @@ import com.everis.notificaciones.service.ProductoService;
 public class NotificacionController {
 	
 	@Autowired
-	CorreoService correo;
+	private CorreoService correo;
 	
 	@Autowired
 	private WhatsAppProxy whatsAppProxy;
@@ -37,6 +37,8 @@ public class NotificacionController {
 	private ProductoService productoService;
 	@Autowired
 	private ClienteService clienteService;
+	@Autowired
+	private Environment environment;
 	
 	
 	@PostMapping("/pedido")
@@ -47,7 +49,6 @@ public class NotificacionController {
 		String latitud = clienteService.buscarCliente(pedidoResponse.getPedido().getCliente().getId()).getLatitud();
 		String longitud = clienteService.buscarCliente(pedidoResponse.getPedido().getCliente().getId()).getLongitud();
 		String nombreproducto ="Productos: ";
-		String tipo="";
 		Producto productoBuscado = new Producto();
 		
 		for (Producto producto : ids) {
@@ -71,6 +72,9 @@ public class NotificacionController {
 			if(whatsresponse.isExito() && correo2 && whatsresponse1.isExito()) {
 				response.setSuccessful(true);
 				response.setTipoMensaje("ambos");
+				response.setMessage(mensaje.toString());
+				response.setPedido(pedidoResponse.getPedido());
+				response.setPort(Integer.parseInt(environment.getProperty("local.server.port")));
 				return response;	
 			}
 			else {
@@ -85,11 +89,13 @@ public class NotificacionController {
 			Mensaje mensaje = new Mensaje();			
 			mensaje.setNumero(configuracion.getWhatsappdestino());
 			mensaje.setMensaje(nombreproducto);
-			String token = configuracion.getWhatzmeapitoken();
 			boolean correo2=correo.enviarCorreo(configuracion.getEmaildestino(), "Compra", mensaje.toString());
 			if(correo2) {
 				response.setSuccessful(true);
 				response.setTipoMensaje("email");
+				response.setMessage(mensaje.toString());
+				response.setPedido(pedidoResponse.getPedido());
+				response.setPort(Integer.parseInt(environment.getProperty("local.server.port")));
 				return response;	
 			}
 			else {
@@ -111,6 +117,9 @@ public class NotificacionController {
 			if(whatsresponse.isExito() && whatsresponse1.isExito()) {
 				response.setSuccessful(true);
 				response.setTipoMensaje("whats");
+				response.setMessage(mensaje.toString());
+				response.setPedido(pedidoResponse.getPedido());
+				response.setPort(Integer.parseInt(environment.getProperty("local.server.port")));
 				return response;	
 			}
 			else {
