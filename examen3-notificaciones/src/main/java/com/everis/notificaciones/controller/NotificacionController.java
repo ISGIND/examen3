@@ -48,23 +48,30 @@ public class NotificacionController {
 			nombreproducto += productoBuscado.getNombre()+" ";
 		}
 		
+		response.setSuccessful(false);
 		
-		if(configuracion.getTiponotificacion().equals("dev") || configuracion.getTiponotificacion().equals("default")){
+		if(configuracion.getTiponotificacion().equals("ambas")){
 			Mensaje mensaje = new Mensaje();			
 			mensaje.setNumero(configuracion.getWhatsappdestino());
 			mensaje.setMensaje(nombreproducto);
 			String token = configuracion.getWhatzmeapitoken();
 			WhatsResponse whatsresponse= whatsAppProxy.enviaMensaje(token, mensaje);
+			WhatsResponse whatsresponse1 = whatsAppProxy.enviaUbicacion(token, mensaje);
 			boolean correo2 = correo.enviarCorreo(configuracion.getEmaildestino(), "Compra", mensaje.toString());
-			if(whatsresponse.isExito() && correo2) {
+			if(whatsresponse.isExito() && correo2 && whatsresponse1.isExito()) {
 				response.setSuccessful(true);
 				response.setTipoMensaje("ambos");
+				return response;	
+			}
+			else {
+				response.setSuccessful(false);
+				response.setTipoMensaje("Imposible enviar todas las notificaciones");
+				return response;	
 			}
 			
 			
-			
 		}
-		if(configuracion.getTiponotificacion().equals("qa")){
+		if(configuracion.getTiponotificacion().equals("email")){
 			Mensaje mensaje = new Mensaje();			
 			mensaje.setNumero(configuracion.getWhatsappdestino());
 			mensaje.setMensaje(nombreproducto);
@@ -73,19 +80,33 @@ public class NotificacionController {
 			if(correo2) {
 				response.setSuccessful(true);
 				response.setTipoMensaje("email");
+				return response;	
+			}
+			else {
+				response.setSuccessful(false);
+				response.setTipoMensaje("Imposible enviar email");
+				return response;	
 			}
 		}
-		if(configuracion.getTiponotificacion().equals("prod")){
+		if(configuracion.getTiponotificacion().equals("whatsapp")){
 			Mensaje mensaje = new Mensaje();			
 			mensaje.setNumero(configuracion.getWhatsappdestino());
 			mensaje.setMensaje(nombreproducto);
 			String token = configuracion.getWhatzmeapitoken();	
 			WhatsResponse whatsresponse= whatsAppProxy.enviaMensaje(token, mensaje);
-			if(whatsresponse.isExito()) {
+			WhatsResponse whatsresponse1 = whatsAppProxy.enviaUbicacion(token, mensaje);
+			if(whatsresponse.isExito() && whatsresponse1.isExito()) {
 				response.setSuccessful(true);
 				response.setTipoMensaje("whats");
+				return response;	
+			}
+			else {
+				response.setSuccessful(false);
+				response.setTipoMensaje("Imposible enviar whats");
+				return response;	
 			}
 		}
+		
 			
 		return response;		
 	}

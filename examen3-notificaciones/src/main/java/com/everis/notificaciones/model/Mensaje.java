@@ -6,8 +6,8 @@ public class Mensaje {
 	
 	private String numero;
 	private String mensaje;
-	private BigDecimal latitud;
-	private BigDecimal longitud;
+	private double latitud = 19.429665;
+	private double longitud = -99.168559;
 	private String direccion;
 	
 public Mensaje() {
@@ -29,16 +29,16 @@ public Mensaje() {
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
 	}
-	public BigDecimal getLatitud() {
+	public double getLatitud() {
 		return latitud;
 	}
-	public void setLatitud(BigDecimal latitud) {
+	public void setLatitud(double latitud) {
 		this.latitud = latitud;
 	}
-	public BigDecimal getLongitud() {
+	public double getLongitud() {
 		return longitud;
 	}
-	public void setLongitud(BigDecimal longitud) {
+	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
 	public String getDireccion() {
